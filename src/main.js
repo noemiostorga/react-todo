@@ -1,6 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Router, Route, browserHistory, hashHistory } from 'react-router';
+import { Router, Route, hashHistory } from 'react-router';
+import store from 'store';
+import { Provider } from 'react-redux';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
@@ -9,19 +11,16 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
-// Layout
-import ExampleLayout from 'layout/example';
-
 // UI
-import ExampleComponent from 'ui/example';
+import Todos from 'ui/todos';
 
 const Site = (
   <MuiThemeProvider>
-    <Router history={hashHistory}>
-      <Route component={ExampleLayout}>
-        <Route path="/" component={ExampleComponent} />
-      </Route>
-    </Router>
+    <Provider store={store}>
+      <Router history={hashHistory}>
+        <Route path="/(:filter)" component={Todos} />
+      </Router>
+    </Provider>
   </MuiThemeProvider>
 );
 
